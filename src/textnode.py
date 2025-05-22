@@ -9,7 +9,7 @@ class TextType(Enum):
   LINK = "link"
   IMAGE = "image"
 
-# Represent inline text and it's form (bold, italic, etc.)
+# Object representing inline text
 class TextNode:
   def __init__(self, text, text_type, url=None):
     self.text = text
