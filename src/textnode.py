@@ -1,5 +1,6 @@
 from enum import Enum
 
+# Python enum for TextNode type
 class TextType(Enum):
   NORMAL = "normal"
   BOLD = "bold"
@@ -8,17 +9,14 @@ class TextType(Enum):
   LINK = "link"
   IMG = "img"
 
+# Represent inline text and it's form (bold, italic, etc.)
 class TextNode:
   def __init__(self, text, text_type, url=None):
     self.text = text
     self.text_type = text_type
     self.url = url
     
-    if isinstance(text_type, TextType):      
-      self.text_type = text_type
-    else:
-      raise Exception("wrong text type")
-    
+  # Compare 2 text nodes
   def __eq__(self, other):
     return (
       self.text == other.text
@@ -26,5 +24,6 @@ class TextNode:
       and self.url == other.url
     )
   
+  # Return string representation of text node
   def __repr__(self):
     return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
