@@ -5,18 +5,18 @@ from textnode import TextNode, TextType
 
 class TestTextNode(unittest.TestCase):
     def test_eq_nodes_equal(self):
-        node = TextNode("This is a text node", TextType.TEXT)
-        node2 = TextNode("This is a text node", TextType.TEXT)
+        node = TextNode("This is a text node", TextType.REGULAR)
+        node2 = TextNode("This is a text node", TextType.REGULAR)
         self.assertEqual(node, node2)
 
     def test_eq_nodes_differ_in_type(self):
-        node = TextNode("This is a text node", TextType.TEXT)
+        node = TextNode("This is a text node", TextType.REGULAR)
         node2 = TextNode("This is a text node", TextType.BOLD)
         self.assertNotEqual(node, node2)
 
     def test_eq_nodes_differ_in_text(self):
-        node = TextNode("This is a text node", TextType.TEXT)
-        node2 = TextNode("This is a text node2", TextType.TEXT)
+        node = TextNode("This is a text node", TextType.REGULAR)
+        node2 = TextNode("This is a text node2", TextType.REGULAR)
         self.assertNotEqual(node, node2)
 
     def test_eq_url(self):
@@ -25,9 +25,9 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node, node2)
 
     def test_repr(self):
-        node = TextNode("This is a text node", TextType.TEXT, "https://www.boot.dev")
+        node = TextNode("This is a text node", TextType.REGULAR, "https://www.boot.dev")
         self.assertEqual(
-            "TextNode(This is a text node, text, https://www.boot.dev)", repr(node)
+            "TextNode(This is a text node, regular, https://www.boot.dev)", repr(node)
         )
 
 
