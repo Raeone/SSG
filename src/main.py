@@ -1,7 +1,7 @@
 from textnode import TextNode, TextType
+from leafnode import LeafNode
 
 def main():
-  text_object = TextNode("some text", TextType.BOLD)
-  print(text_object)
-
+  pass
+  
 main()
