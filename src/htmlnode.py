@@ -1,8 +1,8 @@
 # Object representing html tags, inline or block
 # All params optional:
   # no tag -> render as raw text
-  # no value -> has children
-  # no children -> has value
+  # no value -> has children (ParentNode)
+  # no children -> has value (LeafNode)
   # no props -> no attributes
 class HTMLNode:
   def __init__(self, tag=None, value=None, children=None, props=None):
