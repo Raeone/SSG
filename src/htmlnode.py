@@ -25,4 +25,4 @@ class HTMLNode:
     
   # Return text version of object  
   def __repr__(self):
-    return f"HTMLNode\n tag: {self.tag}\n content: {self.value}\n children: {self.children}\n attributes: {list(self.props.items())}"
+    return f"HTMLNode: ({self.tag}, {self.value}, {self.children}, {self.props})"

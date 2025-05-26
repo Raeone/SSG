@@ -4,7 +4,7 @@ from htmlnode import HTMLNode
 
 class TestHTMLNode(unittest.TestCase):
   def setUp(self):
-    self.node = HTMLNode('a', "Some link", None, { "href": "https://www.google.com", "target": "_blank",})
+    self.node = HTMLNode('a', "Some link", None, { "href": "https://www.google.com", "target": "_blank"})
   
   def test_to_html(self):
     self.assertRaises(NotImplementedError, self.node.to_html)
@@ -31,9 +31,7 @@ class TestHTMLNode(unittest.TestCase):
         )
     
   def test_repr(self):
-    expected = """HTMLNode
- tag: a
- content: Some link
- children: None
- attributes: [('href', 'https://www.google.com'), ('target', '_blank')]"""
-    self.assertEqual(repr(self.node), expected)
+    self.assertEqual(repr(self.node), "HTMLNode: (a, Some link, None, {'href': 'https://www.google.com', 'target': '_blank'})") 
+
+if __name__ == "__main__":
+   unittest.main()
