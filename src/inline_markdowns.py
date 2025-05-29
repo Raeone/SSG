@@ -64,3 +64,63 @@ def extract_markdown_links(text):
       list of tuples: each tuple contains link text and url [(link, url)]
   """
   return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+def split_nodes_image(old_nodes): # list of TextNodes(text, text_type, url) -> new list of TextNodes (text_type corresponding)
+  new_nodes = []
+
+  for node in old_nodes:
+    if node.text_type != TextType.REGULAR:
+      new_nodes.append(node)
+      continue
+      
+    text_img_node = node.text
+    images = extract_markdown_images(text_img_node) # [(alt, url)]
+    if not images:
+      new_nodes.append(node)
+      continue
+
+    for alt, url in images:      
+      
+      sections = text_img_node.split(f"![{alt}]({url})", 1)
+      if len(sections) != 2:
+        raise ValueError("invalid markdown, image section not closed")
+      
+      before, text_img_node = sections
+      if before:
+        new_nodes.append(TextNode(before, TextType.REGULAR))
+      new_nodes.append(TextNode(alt, TextType.IMAGE, url))    
+    
+    if text_img_node:
+      new_nodes.append(TextNode(text_img_node, TextType.REGULAR))
+  
+  return new_nodes
+
+def split_nodes_link(old_nodes): 
+  new_nodes = []
+
+  for node in old_nodes:
+    if node.text_type != TextType.REGULAR:
+      new_nodes.append(node)
+      continue
+      
+    text_link_node = node.text
+    links = extract_markdown_links(text_link_node) # [(link, url)]
+    if not links:
+      new_nodes.append(node)
+      continue
+    
+
+    for link, url in links:      
+      sections = text_link_node.split(f"[{link}]({url})", 1) 
+      if len(sections) != 2:
+        raise ValueError("invalid markdown, link section not closed")
+      
+      before, text_link_node = sections
+      if before:
+        new_nodes.append(TextNode(before, TextType.REGULAR))
+      new_nodes.append(TextNode(link, TextType.LINK, url))    
+    
+    if text_link_node:
+      new_nodes.append(TextNode(text_link_node, TextType.REGULAR))
+  
+  return new_nodes
