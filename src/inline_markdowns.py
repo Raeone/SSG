@@ -142,6 +142,14 @@ def split_nodes_link(old_nodes):
   return new_nodes
 
 def text_to_textnodes(text):
+  """Takes text with markdown and split it to TextNodes objects with respective TextType
+
+  Args:
+      text (string): markdown text
+
+  Returns:
+      list of TextNodes
+  """
   nodes = [TextNode(text, TextType.REGULAR)]
   split_img = split_nodes_image(nodes)
   split_link = split_nodes_link(split_img)
