@@ -66,6 +66,14 @@ def extract_markdown_links(text):
   return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
 
 def split_nodes_image(old_nodes): # list of TextNodes(text, text_type, url) -> new list of TextNodes (text_type corresponding)
+  """Takes TextNodes and split them into regular TextNodes and image TextNodes
+
+  Args:
+      old_nodes (list of TextNodes)
+
+  Returns:
+      list of TextNodes: list of regular and image nodes with respective text types
+  """
   new_nodes = []
 
   for node in old_nodes:
@@ -96,6 +104,14 @@ def split_nodes_image(old_nodes): # list of TextNodes(text, text_type, url) -> n
   return new_nodes
 
 def split_nodes_link(old_nodes): 
+  """Takes TextNodes and split them into regular TextNodes and link TextNodes with respetive text type
+
+  Args:
+      old_nodes (list of TextNodes): [TextNodes]
+
+  Returns:
+      list of TextNodes: returns list of regular and link text nodes with respective text types
+  """
   new_nodes = []
 
   for node in old_nodes:
@@ -124,3 +140,12 @@ def split_nodes_link(old_nodes):
       new_nodes.append(TextNode(text_link_node, TextType.REGULAR))
   
   return new_nodes
+
+def text_to_textnodes(text):
+  nodes = [TextNode(text, TextType.REGULAR)]
+  split_img = split_nodes_image(nodes)
+  split_link = split_nodes_link(split_img)
+  split_code = split_nodes_delimiter(split_link, "`", TextType.CODE)
+  split_italic = split_nodes_delimiter(split_code, "_", TextType.ITALIC)
+  split_bold = split_nodes_delimiter(split_italic, "**", TextType.BOLD)
+  return split_bold
