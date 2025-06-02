@@ -1,0 +1,58 @@
+import unittest
+from block_markdowns import markdown_to_blocks
+
+class TestMarkdownToBlocks(unittest.TestCase):
+  def test_markdown_to_blocks(self):
+    md = """
+This is **bolded** paragraph
+
+This is another paragraph with _italic_ text and `code` here
+This is the same paragraph on a new line
+
+- This is a list
+- with items
+"""
+    blocks = markdown_to_blocks(md)
+    self.assertEqual(
+      blocks,
+      [
+        "This is **bolded** paragraph",
+        "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+        "- This is a list\n- with items",
+      ],
+    )
+
+  def test_empty_lines(self):
+    md = """
+  This is some text. 
+
+
+
+  and some text.
+  """
+    blocks = markdown_to_blocks(md)
+    self.assertEqual(
+      blocks, 
+      [
+        "This is some text.",
+        "and some text."
+      ]
+    )
+  
+  def test_stripped_blocks(self):
+    md = """
+This is some text.    
+
+  and more.   
+"""
+    blocks = markdown_to_blocks(md)
+    self.assertEqual(
+      blocks,
+      [
+        "This is some text.",
+        "and more."
+      ]
+    )
+
+if __name__ == "__main__": 
+  unittest.main()
