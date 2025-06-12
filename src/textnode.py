@@ -1,8 +1,9 @@
 from enum import Enum
 from leafnode import LeafNode
 
-# Python enum for TextNode type
 class TextType(Enum):
+  """Python enum for TextNode type
+  """
   REGULAR = "regular"
   BOLD = "bold"
   ITALIC = "italic"
@@ -10,8 +11,9 @@ class TextType(Enum):
   LINK = "link"
   IMAGE = "image"
 
-# Object representing inline text
 class TextNode:
+  """Object representing inline text
+  """
   def __init__(self, text, text_type, url=None):
     self.text = text
     self.text_type = text_type
@@ -19,18 +21,33 @@ class TextNode:
     
   # Compare 2 text nodes
   def __eq__(self, other):
+    """Compare 2 text nodes
+
+    Args:
+        other (TextNode): override eq method to compare, if 2 TextNode objects are same
+
+    Returns:
+        boolean
+    """
     return (
       self.text == other.text
       and self.text_type == other.text_type 
       and self.url == other.url
     )
   
-  # Return string representation of text node
   def __repr__(self):
+    """Return string representation of text ndoe"""
     return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
 
-# Converts text node object into html node object
 def text_node_to_html_node(text_node):
+  """Converts text node object into html node object LeafNode
+
+  Args:
+      text_node (TextNode): TextNode object
+
+  Returns:
+      LeafNode 
+  """
   match text_node.text_type:
     case TextType.REGULAR:
       return LeafNode(None, text_node.text)

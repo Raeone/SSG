@@ -1,12 +1,23 @@
 from htmlnode import HTMLNode
 
-# Object representing html tag with no content, but with other html tags (children)
 class ParentNode(HTMLNode):
+  """Object representing html tag with no content, but with other html tags (children)
+
+  Args:
+      HTMLNode (object)
+  """
   def __init__(self, tag, children, props=None):
     super().__init__(tag, None, children, props)
   
-  # Render html tag (string) with nested tags
   def to_html(self):
+    """Render html tag (string) with nested tags
+
+    Raises:
+        ValueError: if no children objects or no tag
+
+    Returns:
+        string: html tag and its children as string
+    """
     if self.tag is None:
       raise ValueError("invalid HTML: no tag")
 
