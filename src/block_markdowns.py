@@ -25,19 +25,19 @@ def markdown_to_blocks(markdown): # string -> list of str
   return block_strings
 
 # same as method below, but here it uses regex
-# def block_to_block_type(block): # string -> BlockType(Enum)
-#   if re.match(r"^#{1,6} [^\s].*", block):
-#     return BlockType.HEADING
-#   elif block.startswith("```") and block.endswith("```"):	
-#     return BlockType.CODE
-#   elif re.fullmatch(r"^(>\s?.*\n?)+$", block):
-#     return BlockType.QUOTE
-#   elif re.fullmatch(r"^(-\s.*\n?)+$", block):
-#     return BlockType.UNORDERED_LIST
-#   elif re.fullmatch(r"^(\d+\.\s.*\n?)+$", block):
-#     return BlockType.ORDERED_LIST
-#   else:
-#     return BlockType.PARAGRAPH
+  # def block_to_block_type(block): # string -> BlockType(Enum)
+  #   if re.match(r"^#{1,6} [^\s].*", block):
+  #     return BlockType.HEADING
+  #   elif block.startswith("```") and block.endswith("```"):	
+  #     return BlockType.CODE
+  #   elif re.fullmatch(r"^(>\s?.*\n?)+$", block):
+  #     return BlockType.QUOTE
+  #   elif re.fullmatch(r"^(-\s.*\n?)+$", block):
+  #     return BlockType.UNORDERED_LIST
+  #   elif re.fullmatch(r"^(\d+\.\s.*\n?)+$", block):
+  #     return BlockType.ORDERED_LIST
+  #   else:
+  #     return BlockType.PARAGRAPH
 
 def block_to_block_type(block): # str -> BlockType
   """Takes block of text and decide, what type of block (BlockType enum) it is (paragraph, code, quote, list, ...)
