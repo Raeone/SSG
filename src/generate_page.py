@@ -27,3 +27,21 @@ def generate_page(from_path, template_path, dest_path):
     os.makedirs(dest_dir_path, exist_ok=True)
   with open(dest_path, "w") as f:
     f.write(content)
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+  directory = os.listdir(dir_path_content) # [file, dir, ...]
+  print(directory)
+  for item in directory:
+    print(f"..checking {item} ")
+    item_path = os.path.join(dir_path_content, item)
+    if os.path.isfile(item_path):
+      print(f"item is file {item}")
+      name = os.path.splitext(item)[0]  # "about.md" → "about"
+      dest_path = os.path.join(dest_dir_path, name + ".html")
+      print(f"item path: {item_path} and dest_path {dest_path}")
+      generate_page(item_path, template_path, dest_path)
+    else:
+      dest_path = os.path.join(dest_dir_path, item)
+      print(f"item is directory {item}")
+      generate_pages_recursive(item_path, template_path, dest_path)
+

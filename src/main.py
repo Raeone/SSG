@@ -1,22 +1,18 @@
 import os
 import shutil
 from copystatic import copy_all_content
-from generate_page import generate_page
+from generate_page import generate_pages_recursive
 
 dir_path_static = "./static"
 dir_path_public = "./public"
 dir_path_content = "./content"
-templatep_path = "./template.html"
+template_path = "./template.html"
 
 def main():
   if os.path.exists(dir_path_public):
     shutil.rmtree(dir_path_public)
   copy_all_content(dir_path_static, dir_path_public)
-  generate_page(
-    os.path.join(dir_path_content, "index.md"), 
-    templatep_path,
-    os.path.join(dir_path_public, "index.html")
-  )
+  generate_pages_recursive(dir_path_content, template_path, dir_path_public)
   
 main()
 
