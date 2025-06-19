@@ -1,8 +1,5 @@
-import shutil
+import os
 from document_markdowns import markdown_to_html_node
-from htmlnode import HTMLNode
-from parentnode import ParentNode
-from leafnode import LeafNode
 from extract_title import extract_title
 
 def generate_page(from_path, template_path, dest_path):
@@ -25,6 +22,8 @@ def generate_page(from_path, template_path, dest_path):
   content = template.replace("{{ Title }}", title)  
   content = content.replace("{{ Content }}", html)
 
-  with open("index.html", "w") as f:
+  dest_dir_path = os.path.dirname(dest_path)
+  if dest_dir_path != "":
+    os.makedirs(dest_dir_path, exist_ok=True)
+  with open(dest_path, "w") as f:
     f.write(content)
-  shutil.copy("index.html", dest_path)
