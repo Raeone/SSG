@@ -15,7 +15,7 @@ class LeafNode(HTMLNode):
     Returns:
         string: html tag with attributes as string, ie. "<b>bold</bold>" 
     """
-    if not self.value:
+    if self.value is None:
       raise ValueError("All leaf nodes must have a value")
     
     if not self.tag:
