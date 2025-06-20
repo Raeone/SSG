@@ -2,7 +2,7 @@ import os
 from document_markdowns import markdown_to_html_node
 from extract_title import extract_title
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, base_path):
   """Takes markdown page, converts it into html and inject template.html page - create index.html
 
   Args:
@@ -21,6 +21,8 @@ def generate_page(from_path, template_path, dest_path):
   title = extract_title(markdown)
   content = template.replace("{{ Title }}", title)  
   content = content.replace("{{ Content }}", html)
+  content = content.replace('href="/', f'href="{base_path}')
+  content = content.replace('src="/', f'src="{base_path}')
 
   dest_dir_path = os.path.dirname(dest_path)
   if dest_dir_path != "":
@@ -28,7 +30,7 @@ def generate_page(from_path, template_path, dest_path):
   with open(dest_path, "w") as f:
     f.write(content)
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, base_path):
   directory = os.listdir(dir_path_content) # [file, dir, ...]
   print(directory)
   for item in directory:
@@ -39,9 +41,9 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
       name = os.path.splitext(item)[0]  # "about.md" → "about"
       dest_path = os.path.join(dest_dir_path, name + ".html")
       print(f"item path: {item_path} and dest_path {dest_path}")
-      generate_page(item_path, template_path, dest_path)
+      generate_page(item_path, template_path, dest_path, base_path)
     else:
       dest_path = os.path.join(dest_dir_path, item)
       print(f"item is directory {item}")
-      generate_pages_recursive(item_path, template_path, dest_path)
+      generate_pages_recursive(item_path, template_path, dest_path, base_path)
 
